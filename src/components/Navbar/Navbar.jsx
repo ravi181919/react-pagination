@@ -1,154 +1,187 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
-import { FaRegUserCircle } from "react-icons/fa";
-import { IoIosSunny, IoMdArrowDropdown } from "react-icons/io";
-import { FaBell } from "react-icons/fa";
-import { FaBoxOpen } from "react-icons/fa";
-import { FaRegHeart } from "react-icons/fa";
-import { FaGift } from "react-icons/fa6";
-import { FiShoppingCart } from "react-icons/fi";
-import { LuSunMoon } from "react-icons/lu";
-import { motion } from "motion/react"
+import {FaBell, FaBoxOpen, FaRegHeart, FaRegUserCircle, FaSearch, FaGift, IoIosSunny, IoMdArrowDropdown, IoMdClose, IoMdMenu, FiShoppingCart, LuSunMoon,} from '../icons'
+import { motion } from "motion/react";
+
 const Navbar = () => {
   const [userName, setUserName] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const links = [
-    {
-      linkName: "My Profile",
-      icon: <FaRegUserCircle />,
-      linkURL: "/my-profile",
-    },
+    {linkName: "My Profile",icon: <FaRegUserCircle />,linkURL: "/my-profile",},
     { linkName: "Orders", icon: <FaBoxOpen />, linkURL: "/orders" },
-    { linkName: "Wishist", icon: <FaRegHeart />, linkURL: "/wishlist" },
+    { linkName: "Wishlist", icon: <FaRegHeart />, linkURL: "/wishlist" },
     { linkName: "Rewards", icon: <FaGift />, linkURL: "/rewards" },
     { linkName: "Notification", icon: <FaBell />, linkURL: "/notification" },
   ];
 
   const theme = () => {
-    const themecheck = document.documentElement.classList;
-    if (darkTheme === false) {
-      themecheck.remove("light");
-      themecheck.add("dark");
+    const themeCheck = document.documentElement.classList;
+    if (!darkTheme) {
+      themeCheck.remove("light");
+      themeCheck.add("dark");
     } else {
-      themecheck.remove("dark");
-      themecheck.add("light");
+      themeCheck.remove("dark");
+      themeCheck.add("light");
     }
     setDarkTheme((prev) => !prev);
   };
-  console.log(darkTheme);
 
   return (
-    <div className="w-full h-[14vh] shadow">
-      <div className="w-full h-full flex items-center justify-between px-5">
-        <div className="w-[15%]  drop-shadow-sm ">
+    <div className="w-full shadow">
+      <div className="w-full h-[12vh] flex items-center justify-between px-4 lg:px-5">
+        {/* Logo */}
+        <div className="flex items-center">
           <img
             src="./src/assets/webpageImages/logo5.png"
             alt="seven_nine_logo"
-            className="h-[10vh] w-[6vw]  drop-shadow rounded-full"
+            className="h-[8vh] lg:h-[10vh] lg:w-[6vw] w-[12vw] rounded-full"
           />
         </div>
-        <div className="w-[35%] h-[7vh] overflow-hidden flex items-center">
+
+        {/* Search Bar - Responsive */}
+        <div className="hidden md:flex lg:w-[35%] w-[40%] h-[7vh]">
           <input
             type="text"
             placeholder="Search"
-            className="pl-4 py-2 placeholder:text-sm text-sm h-full w-full border-[1.5px] border-black/85 dark:border-white/20  outline-none rounded-l-2xl  "
+            className="pl-4 py-2 text-sm w-full border-[1.5px] border-black/85 dark:border-white/20 outline-none rounded-l-2xl"
           />
-          <span className="px-6 h-full flex items-center text-white justify-center rounded-r-2xl dark:bg-white/20 bg-black/85 ">
+          <span className="lg:px-4 px-2 flex items-center justify-center text-white bg-black/85 dark:bg-white/20 rounded-r-2xl">
             <FaSearch />
           </span>
         </div>
-        {/* Drop down */}
-        <div
-          onMouseEnter={() => {
-            setDropdownOpen((prev) => !prev), setUserName((prev) => !prev);
-          }}
-          onMouseLeave={() => {
-            setDropdownOpen((prev) => !prev), setUserName((prev) => !prev);
-          }}
-          className="relative top-0 left-0 h-full flex items-center"
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-2xl"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          <div className="flex items-center justify-center gap-5 py-2 px-4 hover:border-[1px] hover:border-black hover:dark:border-white  hover:bg-black/10 hover:dark:bg-white/10  rounded-md ">
-            <div className="flex items-center justify-center gap-2">
-              <span className="font-bold">
-                <FaRegUserCircle />
-              </span>
+          {mobileMenuOpen ? <IoMdClose /> : <IoMdMenu />}
+        </button>
+
+        {/* Desktop Navbar Items */}
+        <div className="hidden md:flex items-center space-x-4">
+          {/* Drop down */}
+          <div
+            onMouseEnter={() => {
+              setDropdownOpen(true);
+              // setUserName(true);
+            }}
+            onMouseLeave={() => {
+              setDropdownOpen(false);
+              // setUserName(false);
+            }}
+            className="relative flex items-center px-4 hover:border hover:rounded-md"
+          >
+            <div className="flex items-center gap-2 py-2">
+              <FaRegUserCircle className="text-lg" />
               <span className="text-md font-medium">Login</span>
+              <IoMdArrowDropdown
+                className={`duration-200 ${isDropdownOpen ? "rotate-180" : ""}`}
+              />
             </div>
-            <span
-              className={`duration-200 ${
-                isDropdownOpen ? "rotate-180" : " "
-              } mt-1`}
-            >
-              <IoMdArrowDropdown />
-            </span>
-          </div>
-          {isDropdownOpen && (
-            <div className="absolute top-16 left-0 dark:bg-white/85 bg-black/85 dark:text-black/85 text-white/85 rounded-md h-fit w-[20vw]">
-              <div className="py-2 px-2">
-                {links.map((link, linkIndex) => (
-                  <NavLink
-                    to={`${link.linkURL}`}
-                    key={linkIndex}
-                    className="flex items-center capitalize hover:bg-red-500 leading-none duration-200 rounded-md hover:text-white justify-start gap-2 py-2.5 px-4 whitespace-nowrap"
-                  >
-                    <span className="text-sm leading-none">{link.icon}</span>
-                    <span className="font-medium text-sm leading-none">
+
+            {isDropdownOpen && (
+              <div className="absolute top-10 bg-transparent left-0 rounded-md h-fit w-[15rem] shadow-md overflow-hidden">
+                <div className="relative top-4 left-0 z-[1] bg-black/85 dark:bg-white/85 text-white dark:text-black h-fit w-full p-2 pb-6 rounded-md">
+                  {links.map((link, index) => (
+                    <NavLink
+                      key={index}
+                      to={link.linkURL}
+                      className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-red-500 rounded-md hover:text-white font-medium"
+                    >
+                      {link.icon}
                       {link.linkName}
-                    </span>
-                  </NavLink>
-                ))}
+                    </NavLink>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-        {/* Cart */}
-        <div className="py-2 px-4 relative hover:border-[1px] hover:border-black hover:dark:border-white  hover:bg-black/10 hover:dark:bg-white/10 rounded-md ">
-          <div className="flex items-center justify-center gap-4 relative">
-            <span className="font-black text-lg">
-              <FiShoppingCart />
-            </span>
-            <span className="font-medium ">Cart</span>
-            <div className="h-[1.5vw] absolute -right-5 -top-2.5 w-[1.5vw] rounded-full flex items-center justify-center dark:bg-white/85 bg-black/85 dark:text-black/85 text-white/85">
-              <span className="rounded-full text-xs font-medium ">10</span>
+            )}
+          </div>
+
+          {/* Cart */}
+          <div className="hidden lg:flex items-center px-4 py-2 hover:border hover:rounded-md relative">
+            <FiShoppingCart className="text-lg" />
+            <span className="ml-2 font-medium">Cart</span>
+            <div className="absolute -top-2 -right-1 w-5 h-5 flex items-center justify-center bg-black/85 dark:bg-white/85 text-white dark:text-black rounded-full text-xs">
+              10
             </div>
           </div>
-        </div>
-        {/* Theme */}
-        <div
-          onClick={() => theme()}
-          className="shadow-sm pl-5 dark:shadow-white/85 shadow-black/85 p-[2px] rounded-full flex items-center justify-center"
-        >
-          <span className="">
-          {darkTheme ? (
+
+          {/* Theme Toggle */}
+          <div
+            onClick={theme}
+            className="hidden lg:flex p-2 drop-shadow-md duration-200 rounded-full shadow-md dark:shadow-black/85 shadow-black/20"
+          >
+            {darkTheme ? (
               <motion.div
-                initial={{ x: 0, color: "#000" }}
-                animate={{ x: -15, rotate: 360, color: "#fff" }}
-                transition={{
-                  ease: "easeIn",
-                  duration: 0.2,
-                }}
-                className=""
+                initial={{ rotate: 0 }}
+                animate={{ rotate: 360 }}
+                transition={{ ease: "easeIn", duration: 0.2 }}
               >
-                <LuSunMoon className={`font-bold text-sm`} />
+                <LuSunMoon className="text-sm" />
               </motion.div>
             ) : (
               <motion.div
-                initial={{ x: -15, color: "#fff" }}
-                animate={{ x: 0, rotate: -360, color: "#000" }}
-                transition={{
-                  ease: "easeOut",
-                  duration: 0.2,
-                }}
-                className=""
+                initial={{ rotate: 360 }}
+                animate={{ rotate: -360 }}
+                transition={{ ease: "easeOut", duration: 0.2 }}
               >
-                <IoIosSunny className={`font-bold text-sm`} />
+                <IoIosSunny className="text-sm text-yellow-500" />
               </motion.div>
             )}
-          </span>
+          </div>
         </div>
       </div>
+
+      {/* Mobile Menu (Only visible on small screens) */}
+      {mobileMenuOpen && (
+        <div className="md:hidden flex flex-col items-center space-y-4 justify-start bg-white dark:bg-black shadow-md py-4">
+          <div className="w-full px-4 flex items-center h-[7vh] overflow-hidden">
+            <input
+              type="text"
+              placeholder="Search"
+              className="pl-4 py-2 text-sm w-full border-[1.5px] border-black/85 dark:border-white/20 outline-none rounded-l-md"
+            />
+            <span className="px-3 py-3 bg-black text-white dark:bg-white dark:text-black rounded-r-md">
+              <FaSearch />
+            </span>
+          </div>
+
+          {/* Mobile Menu Links */}
+          {links.map((link, index) => (
+            <NavLink
+              key={index}
+              to={link.linkURL}
+              className="flex items-center justify-start w-full px-5 gap-2 text-lg hover:text-red-500"
+            >
+              {link.icon} {link.linkName}
+            </NavLink>
+          ))}
+
+          {/* Cart (Only in Mobile) */}
+          <div className="w-full px-5 ">
+            <div className="flex items-center gap-2 relative">
+              <FiShoppingCart className="text-lg" />
+              <span className="ml-2 font-medium">Cart</span>
+              <span className="absolute -top-2 left-18 w-5 h-5 flex items-center justify-center bg-black/85 dark:bg-white/85 text-white dark:text-black rounded-full text-xs">
+                10
+              </span>
+            </div>
+          </div>
+
+          {/* Theme Toggle (Only in Mobile) */}
+          <div onClick={theme} className="p-2 rounded-full shadow-md">
+            {darkTheme ? (
+              <LuSunMoon className="text-sm" />
+            ) : (
+              <IoIosSunny className="text-sm" />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
