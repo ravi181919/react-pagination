@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { FaRegUserCircle } from "react-icons/fa";
-import { IoMdArrowDropdown } from "react-icons/io";
+import { IoIosSunny, IoMdArrowDropdown } from "react-icons/io";
 import { FaBell } from "react-icons/fa";
 import { FaBoxOpen } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { FaGift } from "react-icons/fa6";
 import { FiShoppingCart } from "react-icons/fi";
-import { IoSunny } from "react-icons/io5";
+import { LuSunMoon } from "react-icons/lu";
+import { motion } from "motion/react"
 const Navbar = () => {
   const [userName, setUserName] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -117,17 +118,33 @@ const Navbar = () => {
         {/* Theme */}
         <div
           onClick={() => theme()}
-          className="px-4 py-2 border-[1px] dark:border-white/85 border-black/85 rounded-md"
+          className="shadow-sm pl-5 dark:shadow-white/85 shadow-black/85 p-[2px] rounded-full flex items-center justify-center"
         >
           <span className="">
-            {darkTheme ? (
-              <span className="flex items-center justify-center gap-2 font-bold">
-                <IoSunny /> Dark
-              </span>
+          {darkTheme ? (
+              <motion.div
+                initial={{ x: 0, color: "#000" }}
+                animate={{ x: -15, rotate: 360, color: "#fff" }}
+                transition={{
+                  ease: "easeIn",
+                  duration: 0.2,
+                }}
+                className=""
+              >
+                <LuSunMoon className={`font-bold text-sm`} />
+              </motion.div>
             ) : (
-              <span className="text-yellow-600 flex items-center justify-center gap-2 font-bold">
-                <IoSunny /> Light
-              </span>
+              <motion.div
+                initial={{ x: -15, color: "#fff" }}
+                animate={{ x: 0, rotate: -360, color: "#000" }}
+                transition={{
+                  ease: "easeOut",
+                  duration: 0.2,
+                }}
+                className=""
+              >
+                <IoIosSunny className={`font-bold text-sm`} />
+              </motion.div>
             )}
           </span>
         </div>
