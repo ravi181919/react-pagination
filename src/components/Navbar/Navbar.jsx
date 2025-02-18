@@ -4,6 +4,8 @@ import {FaBell, FaBoxOpen, FaRegHeart, FaRegUserCircle, FaSearch, FaGift, IoIosS
 import { motion } from "motion/react";
 
 const Navbar = () => {
+
+  
   const [userName, setUserName] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false);
@@ -138,7 +140,7 @@ const Navbar = () => {
 
       {/* Mobile Menu (Only visible on small screens) */}
       {mobileMenuOpen && (
-        <div className="md:hidden flex flex-col items-center space-y-4 justify-start bg-white dark:bg-black shadow-md py-4">
+        <div className="md:hidden flex flex-col items-center space-y-4 justify-start h-screen bg-white dark:bg-black shadow-md py-4">
           <div className="w-full px-4 flex items-center h-[7vh] overflow-hidden">
             <input
               type="text"
@@ -155,7 +157,7 @@ const Navbar = () => {
             <NavLink
               key={index}
               to={link.linkURL}
-              className="flex items-center justify-start w-full px-5 gap-2 text-lg hover:text-red-500"
+              className={`flex items-center justify-start w-full px-5 gap-2 text-lg hover:text-red-500`}
             >
               {link.icon} {link.linkName}
             </NavLink>
