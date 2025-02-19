@@ -4,8 +4,6 @@ import {FaBell, FaBoxOpen, FaRegHeart, FaRegUserCircle, FaSearch, FaGift, IoIosS
 import { motion } from "motion/react";
 
 const Navbar = () => {
-
-  
   const [userName, setUserName] = useState(false);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [darkTheme, setDarkTheme] = useState(false);
